@@ -1,2 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Preprocessing">
+      <UniqueIdentifier>{3a7a3872-c4cd-4fd8-a952-e777e7c07c49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities">
+      <UniqueIdentifier>{dfed5fc4-cfa5-45b8-a17b-219d95f20fc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{30c80e67-0980-402b-be92-fc95a2263b0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\Gradients">
+      <UniqueIdentifier>{549dd797-3257-458a-94b8-44c1f4c1d945}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestData">
+      <UniqueIdentifier>{046fe920-2e56-4223-b08a-b943058b7246}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Bitflags.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="QualityMapper.h">
+      <Filter>Preprocessing</Filter>
+    </ClInclude>
+    <ClInclude Include="Gradients.h">
+      <Filter>Utilities\Gradients</Filter>
+    </ClInclude>
+    <ClInclude Include="TestData.h">
+      <Filter>TestData</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QualityMapper.cpp">
+      <Filter>Preprocessing</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Gradients.cpp">
+      <Filter>Utilities\Gradients</Filter>
+    </ClCompile>
+    <ClCompile Include="TestData.cpp">
+      <Filter>TestData</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp" />
+  </ItemGroup>
+</Project>
