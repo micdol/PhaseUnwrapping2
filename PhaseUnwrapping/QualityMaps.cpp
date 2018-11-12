@@ -36,11 +36,13 @@ namespace pu
 			// And add dy variance to the results
 			pdv += WindowedVariance(dy, k, bitflags, ignore_flag);
 
-			// Scale image to range [0,1]
+			// TODO Not sure but scaling might not be the best idea since it makes results not reflect quality properly, say quality has only 2 values; 0.01 and 0.02 -> scaling will deepen the gap from 0.01 to 0.99, i think it might not be ok later
+			// Scale image to range [0,1] 
 			// Since higher variance indicates worse pixels it needs to be inverted
-			cv::normalize(-pdv, pdv, 0, 1, cv::NORM_MINMAX);
+			// cv::normalize(-pdv, pdv, 0, 1, cv::NORM_MINMAX);
 
-			return pdv;
+			// Since higher variance indicates worse pixels it needs to be inverted
+			return -pdv;
 		}
 
 		cv::Mat MaxAbsGrad(const cv::Mat & wrapped_phase, int k, cv::Mat * bitflags, Bitflag ignore_flag)
@@ -76,12 +78,13 @@ namespace pu
 			cv::Mat maxgrad;
 			cv::max(maxgradx, maxgrady, maxgrad);
 
+			// TODO Not sure but scaling might not be the best idea since it makes results not reflect quality properly, say quality has only 2 values; 0.01 and 0.02 -> scaling will deepen the gap from 0.01 to 0.99, i think it might not be ok later
 			// Scale image to range [0,1]
 			// Since higher variance indicates bad pixels it needs to be inverted
-			cv::normalize(-maxgrad, maxgrad, 0, 1, cv::NORM_MINMAX);
+			// cv::normalize(-maxgrad, maxgrad, 0, 1, cv::NORM_MINMAX);
 
 			// Since higher gradient indicates bad pixels it needs to be inverted
-			return maxgrad;
+			return -maxgrad;
 		}
 
 		namespace
@@ -110,6 +113,8 @@ namespace pu
 				// Image for the results
 				cv::Mat variance{ rows,cols,CV_32FC1,cv::Scalar(0) };
 
+				std::mutex mtx;
+
 				// Compute dx derivative variance over window of size k and place it in result image
 				variance.forEach<float>([&](float &var_px, const int* pos) -> void {
 					// Coordinates of center pixel
@@ -118,7 +123,7 @@ namespace pu
 					// Intersection of image and window centered at current pixel (clipping out of bounds pixels at edges)
 					// Ignored bitflags (if any) will be considered later
 					auto roi = rect & cv::Rect(col - k2, row - k2, k, k);
-
+					
 					// "Cut" the window of size k around [row,col] from dx derivative (may vary at edges)
 					cv::Mat window = image(roi);
 
@@ -231,7 +236,6 @@ namespace pu
 						cv::minMaxLoc(window, &minVal, &maxVal);
 						max_px = static_cast<float>(std::max(std::abs(minVal), std::abs(maxVal)));
 					}
-
 				});
 
 				return maximum;

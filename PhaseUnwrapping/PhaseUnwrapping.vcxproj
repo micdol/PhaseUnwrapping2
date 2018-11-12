@@ -24,6 +24,7 @@
     <ClInclude Include="QualityMaps.h" />
     <ClInclude Include="TestData.h" />
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="Wrappers.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Gradients.cpp" />
@@ -31,6 +32,7 @@
     <ClCompile Include="QualityMaps.cpp" />
     <ClCompile Include="TestData.cpp" />
     <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="Wrappers.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4c657cd8-2109-43b0-ae2b-d7c2f86dc6d2}</ProjectGuid>

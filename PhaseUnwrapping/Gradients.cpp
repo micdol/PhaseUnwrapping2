@@ -38,7 +38,7 @@ namespace pu
 			else
 			{
 				float current = wrapped_phase.at<float>(row, col - 1);
-				dx.at<float>(row, col) = Gradient(current, px);
+				dx.at<float>(row, col) = Gradient(px, current);
 			}
 		});
 
@@ -69,7 +69,7 @@ namespace pu
 			else
 			{
 				float current = wrapped_phase.at<float>(row - 1, col);
-				dy.at<float>(row, col) = Gradient(current, px);
+				dy.at<float>(row, col) = Gradient(px, current);
 			}
 		});
 

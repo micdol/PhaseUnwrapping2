@@ -16,6 +16,12 @@
     <Filter Include="TestData">
       <UniqueIdentifier>{046fe920-2e56-4223-b08a-b943058b7246}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utilities\Wrappers">
+      <UniqueIdentifier>{7a898293-12b7-4475-8432-e3e60ee69e90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Preprocessing\QualityMaps">
+      <UniqueIdentifier>{0808a797-bd98-4e80-9c97-5ecc3e48cb50}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bitflags.h">
@@ -30,8 +36,11 @@
     <ClInclude Include="Utils.h">
       <Filter>Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="Wrappers.h">
+      <Filter>Utilities\Wrappers</Filter>
+    </ClInclude>
     <ClInclude Include="QualityMaps.h">
-      <Filter>Preprocessing</Filter>
+      <Filter>Preprocessing\QualityMaps</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -45,8 +54,11 @@
       <Filter>TestData</Filter>
     </ClCompile>
     <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="Wrappers.cpp">
+      <Filter>Utilities\Wrappers</Filter>
+    </ClCompile>
     <ClCompile Include="QualityMaps.cpp">
-      <Filter>Preprocessing</Filter>
+      <Filter>Preprocessing\QualityMaps</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

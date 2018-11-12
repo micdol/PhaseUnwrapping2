@@ -5,8 +5,8 @@
 
 namespace pu
 {
-	constexpr int DEFAULT_TEST_ROWS = 128;
-	constexpr int DEFAULT_TEST_COLS = 128;
+	constexpr int DEFAULT_TEST_ROWS = 256;
+	constexpr int DEFAULT_TEST_COLS = 256;
 	constexpr float DEFAULT_TEST_MIN = -M_PI * 10;
 	constexpr float DEFAULT_TEST_MAX = M_PI * 10;
 

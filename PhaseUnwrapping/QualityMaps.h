@@ -6,6 +6,7 @@ namespace pu
 {
 	namespace quality_maps
 	{
+
 		/// <summary>
 		/// Computes Phase Derivative variance quality map. Variance is interpreted
 		/// as deviation from average value computed in window of size KxK centered
