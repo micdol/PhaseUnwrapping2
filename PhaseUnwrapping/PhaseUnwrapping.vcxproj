@@ -21,14 +21,14 @@
   <ItemGroup>
     <ClInclude Include="Bitflags.h" />
     <ClInclude Include="Gradients.h" />
-    <ClInclude Include="QualityMapper.h" />
+    <ClInclude Include="QualityMaps.h" />
     <ClInclude Include="TestData.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Gradients.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="QualityMapper.cpp" />
+    <ClCompile Include="QualityMaps.cpp" />
     <ClCompile Include="TestData.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>

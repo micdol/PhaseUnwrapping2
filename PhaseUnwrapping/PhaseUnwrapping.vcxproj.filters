@@ -21,9 +21,6 @@
     <ClInclude Include="Bitflags.h">
       <Filter>Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="QualityMapper.h">
-      <Filter>Preprocessing</Filter>
-    </ClInclude>
     <ClInclude Include="Gradients.h">
       <Filter>Utilities\Gradients</Filter>
     </ClInclude>
@@ -33,11 +30,11 @@
     <ClInclude Include="Utils.h">
       <Filter>Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="QualityMaps.h">
+      <Filter>Preprocessing</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="QualityMapper.cpp">
-      <Filter>Preprocessing</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Main</Filter>
     </ClCompile>
@@ -48,5 +45,8 @@
       <Filter>TestData</Filter>
     </ClCompile>
     <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="QualityMaps.cpp">
+      <Filter>Preprocessing</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
