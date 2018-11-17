@@ -22,6 +22,9 @@
     <Filter Include="Preprocessing\QualityMaps">
       <UniqueIdentifier>{0808a797-bd98-4e80-9c97-5ecc3e48cb50}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Preprocessing\Filters">
+      <UniqueIdentifier>{65d8e136-5a02-4e61-930f-cb4b1c4752f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bitflags.h">
@@ -42,6 +45,9 @@
     <ClInclude Include="QualityMaps.h">
       <Filter>Preprocessing\QualityMaps</Filter>
     </ClInclude>
+    <ClInclude Include="Filters.h">
+      <Filter>Preprocessing\Filters</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -60,5 +66,6 @@
     <ClCompile Include="QualityMaps.cpp">
       <Filter>Preprocessing\QualityMaps</Filter>
     </ClCompile>
+    <ClCompile Include="Filters.cpp" />
   </ItemGroup>
 </Project>

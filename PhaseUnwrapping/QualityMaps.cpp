@@ -22,7 +22,7 @@ namespace pu
 			}
 			assert(k >= 3 &&
 				(k % 2) == 1 &&
-				   "[MaxAbsGrad] K must be odd, greater equal 3");
+				   "[PDV] K must be odd, greater equal 3");
 
 			// First compute dx derivative
 			cv::Mat dx = DxGradient(wrapped_phase);
@@ -112,8 +112,6 @@ namespace pu
 
 				// Image for the results
 				cv::Mat variance{ rows,cols,CV_32FC1,cv::Scalar(0) };
-
-				std::mutex mtx;
 
 				// Compute dx derivative variance over window of size k and place it in result image
 				variance.forEach<float>([&](float &var_px, const int* pos) -> void {

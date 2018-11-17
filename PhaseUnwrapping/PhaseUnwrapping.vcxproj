@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bitflags.h" />
+    <ClInclude Include="Filters.h" />
     <ClInclude Include="Gradients.h" />
     <ClInclude Include="QualityMaps.h" />
     <ClInclude Include="TestData.h" />
@@ -27,6 +28,7 @@
     <ClInclude Include="Wrappers.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Filters.cpp" />
     <ClCompile Include="Gradients.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="QualityMaps.cpp" />
