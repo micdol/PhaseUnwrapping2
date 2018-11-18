@@ -21,39 +21,35 @@ namespace pu
 			// Half window size rounded down
 			int k2 = k / 2;
 
-			cv::Mat cplx{ rows,cols, CV_32FC2, cv::Scalar(0) };
-
-			// Re-map phase into complex values
-			wrapped.forEach<float>([&](const float & px, const int * pos) -> void {
-				int row = pos[0], col = pos[1];
-
-				// Wrapped phase is in range [0,1]
-				float phase = px * CV_PI * 2.0;
-				float re = std::cosf(phase);
-				float im = std::sinf(phase);
-				cplx.at<cv::Vec2f>(row, col) = cv::Vec2f(re, im);
-			});
-
+			// Image for the result
 			cv::Mat filtered{ rows, cols, CV_32FC1, cv::Scalar(0) };
 
-			// Compute windowed mean around each pixel and store result in filtered
-			filtered.forEach<float>([&](float & px, const int * pos) -> void {
+			wrapped.forEach<float>([&](const float& px, const int * pos) -> void {
 				int row = pos[0], col = pos[1];
 
-				// Intersection of image and window centered at current pixel
-				auto roi = rect & cv::Rect(col - k2, row - k2, k, k);
+				// "Cut out" the region of interest
+				cv::Rect roi = rect & cv::Rect(col - k2, row - k2, k, k);
+				cv::Mat window = wrapped(roi);
 
-				cv::Mat window = cplx(roi);
+				// Recompute Re and Im from Phase in the window
+				cv::Mat cplx{ window.rows, window.cols, CV_32FC2, cv::Scalar(0) };
+				window.forEach<float>([&](const float& win_px, const int * win_pos) -> void {
+					int win_row = win_pos[0], win_col = win_pos[1];
+					// Phase is in range [0,1]
+					float phase = win_px * CV_PI * 2.0f;
+					float re = std::cosf(phase);
+					float im = std::sinf(phase);
+					cplx.at<cv::Vec2f>(win_row, win_col) = cv::Vec2f(re, im);
+				});
 
-				// Compute mean per each channel
-				cv::Scalar result = cv::mean(window);
-				float re = result[0];
-				float im = result[1];
+				// Compute mean 
+				cv::Scalar mean = cv::mean(cplx);
+				float re = mean[0];
+				float im = mean[1];
 
-				// Retrieve "mean" phase
-				px = std::atan2f(im, re);
+				filtered.at<float>(row, col) = std::atan2f(im, re);
 			});
-
+			
 			// Scale result to [0,1] range
 			cv::normalize(filtered, filtered, 0, 1, cv::NORM_MINMAX);
 
@@ -77,52 +73,59 @@ namespace pu
 			// Half window size rounded down
 			int k2 = k / 2;
 
-			cv::Mat cplx{ rows,cols, CV_32FC2, cv::Scalar(0) };
-
-			// Re-map phase into complex values
-			wrapped.forEach<float>([&](const float & px, const int * pos) -> void {
-				int row = pos[0], col = pos[1];
-
-				// Wrapped phase is in range [0,1]
-				float phase = px * CV_PI * 2.0;
-				float re = std::cosf(phase);
-				float im = std::sinf(phase);
-				cplx.at<cv::Vec2f>(row, col) = cv::Vec2f(re, im);
-			});
-
+			// Image for the result
 			cv::Mat filtered{ rows, cols, CV_32FC1, cv::Scalar(0) };
 
-			// Compute windowed mean around each pixel and store result in filtered
-			filtered.forEach<float>([&](float & px, const int * pos) -> void {
+			wrapped.forEach<float>([&](const float& px, const int * pos) -> void {
 				int row = pos[0], col = pos[1];
 
-				// Intersection of image and window centered at current pixel
-				auto roi = rect & cv::Rect(col - k2, row - k2, k, k);
+				// "Cut out" the region of interest
+				cv::Rect roi = rect & cv::Rect(col - k2, row - k2, k, k);
+				cv::Mat window = wrapped(roi);
 
-				cv::Mat window = cplx(roi);
+				// Recompute Re and Im from Phase in the window
+				cv::Mat re_part{ window.rows, window.cols, CV_32FC1, cv::Scalar(0) };
+				cv::Mat im_part{ window.rows, window.cols, CV_32FC1, cv::Scalar(0) };
+				window.forEach<float>([&](const float& win_px, const int * win_pos) -> void {
+					int win_row = win_pos[0], win_col = win_pos[1];
+					// Phase is in range [0,1]
+					float phase = win_px * CV_PI * 2.0f;
+					float re = std::cosf(phase);
+					float im = std::sinf(phase);
+					re_part.at<float>(win_row, win_col) = re;
+					im_part.at<float>(win_row, win_col) = im;
+				});
 
-				// Compute median per each channel (needs cloning due to sorting)
-				std::vector<cv::Mat> reim;
-				cv::split(window.clone(), reim);
-				int n = window.total();
+				int n2 = window.total() / 2;
+				
+				// Partialy sort Re and Im so that middle element(s) (needed for median) are on their place
+				auto re_begin = re_part.begin<float>();
+				auto re_mid = re_part.begin<float>() + n2 + 1;
+				auto re_end = re_part.end<float>();
+				std::nth_element(re_begin, re_mid, re_end);
+
+				auto im_begin = im_part.begin<float>();
+				auto im_mid = im_part.begin<float>() + n2 + 1;
+				auto im_end = im_part.end<float>();
+				std::nth_element(im_begin, im_mid, im_end);
+
+				// Compute Re and Im median
+				// Odd number of pixels - take only middle element 
 				float re, im;
-				if(n % 2)
+				if(window.total() % 2)
 				{
-					std::nth_element(reim[0].begin<float>(), reim[0].begin<float>() + n / 2, reim[0].end<float>());
-					std::nth_element(reim[1].begin<float>(), reim[1].begin<float>() + n / 2, reim[1].end<float>());
-					re = *(reim[0].begin<float>() + n / 2);
-					im = *(reim[1].begin<float>() + n / 2);
+					re = *(re_part.begin<float>() + n2);
+					im = *(im_part.begin<float>() + n2);
 				}
+				// Even number of pixels - take average of two middle elements
 				else
 				{
-					std::nth_element(reim[0].begin<float>(), reim[0].begin<float>() + n / 2 + 1, reim[0].end<float>());
-					std::nth_element(reim[1].begin<float>(), reim[1].begin<float>() + n / 2 + 1, reim[1].end<float>());
-					re = (*(reim[0].begin<float>() + n / 2) + *(reim[0].begin<float>() + n / 2)) / 2;
-					im = (*(reim[1].begin<float>() + n / 2) + *(reim[1].begin<float>() + n / 2)) / 2;
+					re = (*(re_part.begin<float>() + n2) + *(re_part.begin<float>() + n2 + 1)) / 2.0f;
+					im = (*(im_part.begin<float>() + n2) + *(im_part.begin<float>() + n2 + 1)) / 2.0f;
 				}
 
-				// Retrieve "median" phase
-				px = std::atan2f(im, re);
+				// Compute median phase
+				filtered.at<float>(row, col) = std::atan2f(im, re);
 			});
 
 			// Scale result to [0,1] range

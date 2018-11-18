@@ -25,6 +25,9 @@
     <Filter Include="Preprocessing\Filters">
       <UniqueIdentifier>{65d8e136-5a02-4e61-930f-cb4b1c4752f3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Preprocessing\Masks">
+      <UniqueIdentifier>{127e433b-fc3b-4fad-88d7-dfd01bd783b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bitflags.h">
@@ -48,6 +51,9 @@
     <ClInclude Include="Filters.h">
       <Filter>Preprocessing\Filters</Filter>
     </ClInclude>
+    <ClInclude Include="Masks.h">
+      <Filter>Preprocessing\Masks</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -59,13 +65,17 @@
     <ClCompile Include="TestData.cpp">
       <Filter>TestData</Filter>
     </ClCompile>
-    <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Wrappers.cpp">
       <Filter>Utilities\Wrappers</Filter>
     </ClCompile>
     <ClCompile Include="QualityMaps.cpp">
       <Filter>Preprocessing\QualityMaps</Filter>
     </ClCompile>
-    <ClCompile Include="Filters.cpp" />
+    <ClCompile Include="Filters.cpp">
+      <Filter>Preprocessing\Filters</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

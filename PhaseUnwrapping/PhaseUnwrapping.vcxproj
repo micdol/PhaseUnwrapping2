@@ -22,6 +22,7 @@
     <ClInclude Include="Bitflags.h" />
     <ClInclude Include="Filters.h" />
     <ClInclude Include="Gradients.h" />
+    <ClInclude Include="Masks.h" />
     <ClInclude Include="QualityMaps.h" />
     <ClInclude Include="TestData.h" />
     <ClInclude Include="Utils.h" />
